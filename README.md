@@ -4,7 +4,7 @@ Minimalistic [Slack](https://slack.com/) client to post messages via [Incoming W
 
 Usage
 --------------------------------------------------
-```
+```scala
 import com.igeolise.slack.HttpSlackClient
 import com.igeolise.slack.SlackClient._
 
