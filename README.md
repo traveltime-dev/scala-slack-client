@@ -5,11 +5,12 @@ Minimalistic [Slack](https://slack.com/) client to post messages via [Incoming W
 Usage
 --------------------------------------------------
 ```scala
+import scala.concurrent.Future
 import com.igeolise.slack.HttpSlackClient
 import com.igeolise.slack.SlackClient._
 
-val token = "XXX/YYY/ZZZ"
-val response = HttpSlackClient(token).sendMsg(
+val token: String = "XXX/YYY/ZZZ"
+val response: Future[Either[Error, Unit]] = HttpSlackClient(token).sendMsg(
   notify = Seq(Notify.User("name")),
   msg = "message text",
   attachments = Seq(Attachment("attachment text", Color.Red))
