@@ -6,3 +6,15 @@ jdk:
 - oraclejdk8
 script:
   - sbt ++$TRAVIS_SCALA_VERSION clean test
+deploy:
+  provider: script
+  script:
+  - /bin/bash "$TRAVIS_BUILD_DIR/.travis.credentials.sh" && sbt ++$TRAVIS_SCALA_VERSION publish
+  on:
+    tags: true
+env:
+  global:
+  # travis encrypt BINTRAY_USER=zamblauskas
+  - secure: "h3Zf9I7SGeP6E4FBs/tGXeJ7S6XtHaW4WUx8DZ0DOMZy9a1bdKpmiL/cJ0xM0vpxCsP2mCGjn8+iWpqGR4nsaXXGfNAPMkxZw5kEhNO+ubSpdq2nnHm9/8EVC8y8Hb0EDMm1YLahXXIWwVh4HdL+48fYc9SKuFj894g6mF9W6cpXtgOw3lARoVwkHMo77NsxJPZZoklwRJ73L5URenJiEP1sdTPk6incFt4JJy8aEHFrEsYZ4xKSbfZIeHkshE0ZpnRAXcWubXPFYrqJvbnWyF2tMddYJ5qVbJsH+Njg+ppqzlSHGQLae79kX259a/6POYcWBSmLdWD9c3u/RP7l8s052hETQ8t+H1//dC54aFQFNdwOkHjDB8YSMcamPl6qlw+OPhaETpBEVjLpszZtK+j6i2RHHWQCxMdyWa8lfDeSG69/FJWRn+/X/vPn8sB0tW+hh1qD9LbohMb/EAfz9vgXIgk7UlXyxOYG2xX8r93fYD67Srvs2lrClrxH2bv/aqe5MXZn4T5wJ7yw24d7OsnN9pfPegYvcwDqETF+eEjpzRevSHK6i4qaD+vraDD4bxOZgdltIL0vC6vCdc7Un26xtjof/PAS46ty95bhOjlCnSlwoBBwDWdeOAO1g/WWEdNhbqCMw1iVbbmaamDdrkMIQRB+nJKI17kIKo7jNEo="
+  # travis encrypt BINTRAY_PASSWORD=xxx
+  - secure: "NdjTmwpK16C8tmnH8NI74w5qm+7ljzo4eIxyP20yPix44vgrV1mgpz1ixdZXf85qoZPlCwBzghUxWY4EvPg6/okZ9jMcZQ8SinkW4e53jNHeXzE51BHJMXT98snTHyxAA/NfxWq8+YgtE2t9AUt+qpHROk9VFFlvjbDEeAJXjUew3VR/hM/HaykJw7S5+Pw3Cf3kQlErkNAmNfBaGpMkw6Q0NyUPZ1shPwmoI8YV3BJQj59cI/CNC0bnQS1pNCoWo0e/mzDmpBwYZjv6TBa7bPqyEYtDNQ9PY3l+bmd3QaK17troyrECvY4MquFc85v1cQPfDypHag0lgYUAH8n4lr9Kp5RfsZRpxgDEePLDcz0jRIEfI7uz/jHkvxlKzOeBgbXkUIpCsZtTk/hY2nARTPhF1QFdq6tsju2RcET3v66ZCIKp4y4z2eRwpc5Ixf8xd0b66WBSkcpMFRVhBOUtjXsVnWFDC7jdRKBRdD7hcj4bSzlWBXIf7bYrDTH2Vs1XHhD2l27/v1amDIaq+RTv2YRhlX+HXhck98eTDKHqps3dmiRPygQ/UqCravsP6xRHVP+tUktbkGcXOSKKvJYiTo6IcSS9LHBrMgNdhEPgTlPBPGnj0KkTwoP73y8HCyrnxhffSn55Pg5Cw3nzepGlw6Yyivw7HREuowNcLR8qkp8="
