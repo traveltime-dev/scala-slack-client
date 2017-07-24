@@ -1,6 +1,6 @@
 organization := "com.igeolise"
 
-name := "slack-client"
+name := "scala-slack-client"
 
 scalacOptions ++= Seq(
   "-feature",
@@ -22,3 +22,7 @@ libraryDependencies ++= Seq(
   "org.scalatest"           %% "scalatest"     % "3.0.3"    % Test,
   "org.scalacheck"          %% "scalacheck"    % "1.13.5"   % Test
 )
+
+bintrayOrganization := Some("igeolise")
+
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
