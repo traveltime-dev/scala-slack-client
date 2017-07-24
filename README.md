@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/igeolise/scala-slack-client.svg?branch=master)](https://travis-ci.org/igeolise/scala-slack-client)
+
+
 About
 --------------------------------------------------
 Minimalistic [Slack](https://slack.com/) client to post messages via [Incoming Webhooks](https://api.slack.com/incoming-webhooks).
