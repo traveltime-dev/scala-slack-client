@@ -74,7 +74,8 @@ object HttpSlackClient {
         "attachments" -> attachments.map { attachment =>
           Json.obj(
             "text" -> attachment.text,
-            "color" -> attachment.color.code
+            "color" -> attachment.color.code,
+            "mrkdwn_in" -> Seq("text")
           )
         },
         "link_names" -> 1
