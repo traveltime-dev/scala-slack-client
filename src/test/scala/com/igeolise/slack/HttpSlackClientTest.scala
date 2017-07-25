@@ -41,8 +41,10 @@ class HttpSlackClientTest extends FunSpec with Matchers with GeneratorDrivenProp
         attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
       )
       val expected = """{"text":"<!channel> @some user some message text",""" +
-                     """"attachments":[{"text":"some attachment text 1","color":"#008000"},{"text":"some attachment text 2","color":"#808080"}],""" +
-                     """"link_names":1}"""
+                     """"attachments":[""" +
+                     """{"text":"some attachment text 1","color":"#008000","mrkdwn_in":["text"]},""" +
+                     """{"text":"some attachment text 2","color":"#808080","mrkdwn_in":["text"]}""" +
+                     """],"link_names":1}"""
       mapped shouldEqual expected
     }
   }
