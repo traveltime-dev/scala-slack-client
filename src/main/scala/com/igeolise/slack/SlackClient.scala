@@ -15,14 +15,15 @@ trait SlackClient {
 object SlackClient {
   sealed abstract class Color(val code: String)
   object Color {
-    case object Red   extends Color("#FF0000")
-    case object Green extends Color("#008000")
-    case object Gray  extends Color("#808080")
+    case object Red    extends Color("#FF0000")
+    case object Green  extends Color("#008000")
+    case object Gray   extends Color("#808080")
+    case object Yellow extends Color("#FFFF00")
   }
 
   case class Attachment(text: String, color: Color)
 
-  sealed abstract class Error(show: String)
+  sealed abstract class Error(val show: String)
   object Error {
     case class UnexpectedStatusCode(statusCode: Int, body: String) extends
       Error(s"Unexpected response status code $statusCode with response body '$body'")
