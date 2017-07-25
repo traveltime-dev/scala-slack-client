@@ -36,3 +36,8 @@ resolvers += Resolver.bintrayRepo("igeolise", "maven")
 
 libraryDependencies += "com.igeolise" %% "scala-slack-client" % "<latest_version>"
 ```
+
+Development
+--------------------------------------------------
+
+Check [Wiki](https://github.com/igeolise/scala-slack-client/wiki) for development notes.
