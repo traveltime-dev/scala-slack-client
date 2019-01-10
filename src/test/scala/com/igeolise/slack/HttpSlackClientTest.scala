@@ -3,7 +3,7 @@ package com.igeolise.slack
 import com.igeolise.slack.HttpSlackClient.PayloadMapper
 import com.igeolise.slack.SlackClient.Attachment
 import com.igeolise.slack.SlackClient.Color.{Gray, Green}
-import com.igeolise.slack.SlackClient.Notify.{Channel, User}
+import com.igeolise.slack.SlackClient.Notify.{Channel, UserID}
 import org.scalacheck.Gen
 import org.scalatest.Matchers
 import org.scalatest.FunSpec
@@ -36,11 +36,11 @@ class HttpSlackClientTest extends FunSpec with Matchers with GeneratorDrivenProp
   describe("PayloadMapper") {
     it("should map to json string") {
       val mapped = PayloadMapper.toBody(
-        notify = Seq(Channel, User("some user")),
+        notify = Seq(Channel, UserID("W123")),
         msg = "some message text",
         attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
       )
-      val expected = """{"text":"<!channel> @some user some message text",""" +
+      val expected = """{"text":"<!channel> <@W123> some message text",""" +
                      """"attachments":[""" +
                      """{"text":"some attachment text 1","color":"#008000","mrkdwn_in":["text"]},""" +
                      """{"text":"some attachment text 2","color":"#808080","mrkdwn_in":["text"]}""" +

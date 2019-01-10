@@ -34,7 +34,7 @@ object SlackClient {
   sealed abstract class Notify(val formatted: String)
   object Notify {
     case object Channel extends Notify("<!channel>")
-    case class User(name: String) extends Notify(s"@$name")
+    case class UserID(id: String) extends Notify(s"<@$id>")
   }
 }
 
