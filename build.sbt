@@ -1,7 +1,6 @@
 organization := "com.igeolise"
 
 name := "scala-slack-client"
-version := "1.1.0"
 
 scalacOptions ++= Seq(
   "-feature",
