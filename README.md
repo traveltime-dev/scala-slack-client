@@ -14,7 +14,7 @@ import com.igeolise.slack.SlackClient._
 
 val token: String = "XXX/YYY/ZZZ"
 val response: Future[Either[Error, Unit]] = HttpSlackClient(token).sendMsg(
-  notify = Seq(Notify.User("name")),
+  notify = Seq(Notify.UserID("W123")),
   msg = "message text",
   attachments = Seq(Attachment("attachment text", Color.Red))
 )
