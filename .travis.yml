@@ -12,6 +12,7 @@ deploy:
   - /bin/bash "$TRAVIS_BUILD_DIR/.travis.credentials.sh" && sbt ++$TRAVIS_SCALA_VERSION publish
   on:
     tags: true
+dist: trusty
 env:
   global:
   # travis encrypt BINTRAY_USER=zamblauskas
