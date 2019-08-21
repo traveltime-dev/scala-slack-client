@@ -35,6 +35,7 @@ object SlackClient {
   object Notify {
     case object Channel extends Notify("<!channel>")
     case class UserID(id: String) extends Notify(s"<@$id>")
+    case class UserGroup(groupName: String, groupId: String) extends Notify(s"<!subteam^$groupId|$groupName>")
   }
 }
 
