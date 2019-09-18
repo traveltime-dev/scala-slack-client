@@ -8,7 +8,6 @@ scalacOptions ++= Seq(
   "-unchecked",
   "-Xfatal-warnings",
   "-Xlint",
-  "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
   "-Ywarn-value-discard"
@@ -16,7 +15,7 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.typesafe.play"       %% "play-json"     % "2.7.4",
-  "net.databinder.dispatch" %% "dispatch-core" % "0.13.4",
+  "org.dispatchhttp"        %% "dispatch-core" % "1.1.0",
   "org.apache.commons"      %  "commons-lang3" % "3.9",
   "org.joda"                %  "joda-convert"  % "2.2.1",
   "org.scalatest"           %% "scalatest"     % "3.0.8"    % Test,
