@@ -14,12 +14,13 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play"       %% "play-json"     % "2.7.4",
-  "org.dispatchhttp"        %% "dispatch-core" % "1.1.0",
-  "org.apache.commons"      %  "commons-lang3" % "3.9",
-  "org.joda"                %  "joda-convert"  % "2.2.1",
-  "org.scalatest"           %% "scalatest"     % "3.0.8"    % Test,
-  "org.scalacheck"          %% "scalacheck"    % "1.14.0"   % Test
+  "com.typesafe.play"          %% "play-json"     % "2.7.4",
+  "org.dispatchhttp"           %% "dispatch-core" % "1.1.0",
+  "org.apache.commons"         %  "commons-lang3" % "3.9",
+  "org.joda"                   %  "joda-convert"  % "2.2.1",
+  "com.fasterxml.jackson.core" %  "jackson-core"  % "2.10.0",
+  "org.scalatest"              %% "scalatest"     % "3.0.8"    % Test,
+  "org.scalacheck"             %% "scalacheck"    % "1.14.0"   % Test
 )
 
 bintrayOrganization := Some("igeolise")
