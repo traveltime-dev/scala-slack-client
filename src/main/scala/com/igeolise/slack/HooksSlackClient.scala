@@ -1,19 +1,21 @@
 package com.igeolise.slack
 
-import com.igeolise.slack.SlackClient._
+import com.igeolise.slack.HooksSlackClient.HookMessage
 import org.apache.commons.lang3.exception.ExceptionUtils
 
 import scala.concurrent.Future
 
-@deprecated("Use HooksSlackClient", "1.4.0")
-trait SlackClient {
+trait HooksSlackClient {
   val hooksUrl = "https://hooks.slack.com/services/"
   val jsonContentType = "application/json"
 
-  def sendMsg(notify: Seq[Notify], msg: String, attachments: Seq[Attachment]): Future[Either[Error, Unit]]
+  def sendMsg(hooksMessage: HookMessage, token: String): Future[Either[HooksSlackClient.Error, Unit]]
 }
 
-object SlackClient {
+object HooksSlackClient {
+
+  case class HookMessage(notifications: Seq[Notify], msg: String, attachments: Seq[Attachment])
+
   sealed abstract class Color(val code: String)
   object Color {
     case object Red    extends Color("#FF0000")

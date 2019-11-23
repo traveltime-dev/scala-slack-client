@@ -35,11 +35,14 @@ class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPro
 
   describe("PayloadMapper") {
     it("should map to json string") {
-      val mapped = PayloadMapper.toBody(
-        notify = Seq(Channel, UserID("W123"), UserGroup("dev-ops", "SGQKH63CF")),
-        msg = "some message text",
-        attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
-      )
+      val mapped =
+        PayloadMapper
+          .toBody(
+            notify = Seq(Channel, UserID("W123"), UserGroup("dev-ops", "SGQKH63CF")),
+            msg = "some message text",
+            attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
+          ).toString()
+
       val expected = """{"text":"<!channel> <@W123> <!subteam^SGQKH63CF|dev-ops> some message text",""" +
                      """"attachments":[""" +
                      """{"text":"some attachment text 1","color":"#008000","mrkdwn_in":["text"]},""" +

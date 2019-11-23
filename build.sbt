@@ -2,6 +2,8 @@ organization := "com.igeolise"
 
 name := "scala-slack-client"
 
+version := "2.0.0-SNAPSHOT"
+
 scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
