@@ -38,7 +38,9 @@ class InteractiveMessageWritesSpec extends FunSpec with Matchers {
       val blocks = Vector(section, divider, section2, actions)
       val interactiveSlackMessage = InteractiveMessage(Channel("test_channel_Id"), blocks)
 
-      val content = Source.fromURL(getClass.getClassLoader.getResource("json/interactiveMessage.json")).mkString
+      val source = Source.fromURL(getClass.getClassLoader.getResource("json/interactiveMessage.json"))
+      val content = source.mkString
+      source.close
 
       val expected = Json.parse(content)
       val result = Json.toJson(interactiveSlackMessage)
