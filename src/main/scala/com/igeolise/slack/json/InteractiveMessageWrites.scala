@@ -46,7 +46,7 @@ object InteractiveMessageWrites {
       "value" -> button.value.map(JsString),
       "style" -> button.style.map(style => JsString(style.literal)),
       "confirm" -> button.confirm.map(confirmDialogWrites.writes)
-    ).collect[String, JsValue]{ case (key, Some(value)) => (key, value) }
+    ).collect{ case (key, Some(value)) => (key, value) }
   )
 
   val elementsWrites: Writes[Element] = Writes[Element] {
