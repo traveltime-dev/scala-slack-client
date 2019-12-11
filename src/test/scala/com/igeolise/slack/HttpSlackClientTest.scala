@@ -1,9 +1,9 @@
 package com.igeolise.slack
 
-import com.igeolise.slack.HttpSlackClient.PayloadMapper
-import com.igeolise.slack.SlackClient.Attachment
-import com.igeolise.slack.SlackClient.Color.{Gray, Green}
-import com.igeolise.slack.SlackClient.Notify.{Channel, UserGroup, UserID}
+import com.igeolise.slack.HooksSlackClient.{Attachment, HookMessage}
+import com.igeolise.slack.HooksSlackClient.Color.{Gray, Green}
+import com.igeolise.slack.HooksSlackClient.Notify.{Channel, UserGroup, UserId}
+import com.igeolise.slack.util.PayloadMapper
 import org.scalacheck.Gen
 import org.scalatest.Matchers
 import org.scalatest.FunSpec
@@ -16,7 +16,7 @@ class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPro
       val successCodeGen = Gen.choose(200, 299)
 
       forAll(successCodeGen) { code =>
-        HttpSlackClient.isResponseSuccess(code) shouldEqual true
+        SlackHttpClient.isResponseSuccess(code) shouldEqual true
       }
     }
 
@@ -28,20 +28,19 @@ class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPro
       } yield code
 
       forAll(failureCodeGen) { code =>
-        HttpSlackClient.isResponseSuccess(code) shouldEqual false
+        SlackHttpClient.isResponseSuccess(code) shouldEqual false
       }
     }
   }
 
   describe("PayloadMapper") {
     it("should map to json string") {
-      val mapped =
-        PayloadMapper
-          .toBody(
-            notify = Seq(Channel, UserID("W123"), UserGroup("dev-ops", "SGQKH63CF")),
-            msg = "some message text",
-            attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
-          ).toString()
+      val message = HookMessage(
+        notifications = Seq(Channel, UserId("W123"), UserGroup("dev-ops", "SGQKH63CF")),
+        msg = "some message text",
+        attachments = Seq(Attachment("some attachment text 1", Green), Attachment("some attachment text 2", Gray))
+      )
+      val mapped = PayloadMapper.toBodyJson(message).toString
 
       val expected = """{"text":"<!channel> <@W123> <!subteam^SGQKH63CF|dev-ops> some message text",""" +
                      """"attachments":[""" +

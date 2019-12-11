@@ -3,9 +3,9 @@ package com.igeolise.slack
 import java.nio.charset.Charset
 
 import com.igeolise.slack.HooksSlackClient.{Error, HookMessage}
-import com.igeolise.slack.HttpSlackClient.{PayloadMapper, _}
 import com.igeolise.slack.dto.InteractiveMessage
 import com.igeolise.slack.json.InteractiveMessageWrites._
+import com.igeolise.slack.util.PayloadMapper
 import dispatch.{Http, url => Url, _}
 import play.api.libs.json.{JsValue, Json}
 
@@ -13,6 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
+
   def sendMsg(hooksMessage: HookMessage, token: String): Future[Either[Error, Unit]] = {
     val body = PayloadMapper.toBodyJson(hooksMessage)
     val url = hooksUrl + token
@@ -22,7 +23,7 @@ object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
 
   def sendInteractiveMessage(interactiveMessage: InteractiveMessage, authToken: String): Future[Either[Error, Unit]] =
     sendPost(
-      "https://slack.com/api/chat.postMessage",
+      postMessageUrl,
       Json.toJson(interactiveMessage),
       Map("Authorization" -> Seq(authToken))
     )
@@ -44,4 +45,6 @@ object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
         else Left(Error.UnexpectedStatusCode(r.getStatusCode, r.getResponseBody))
       }
   }
+
+  def isResponseSuccess(code: Int): Boolean = code >= 200 && code <= 299
 }
