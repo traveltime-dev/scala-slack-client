@@ -1,0 +1,43 @@
+{
+  "channel": "test_channel_Id",
+  "blocks" : [ {
+    "type" : "section",
+    "text" : {
+      "type" : "mrkdwn",
+      "verbatim" : false,
+      "text" : "Hello, I would like to do some things"
+    }
+  }, {
+    "type" : "divider"
+  }, {
+    "type" : "section",
+    "text" : {
+      "type" : "plain_text",
+      "emoji" : false,
+      "text" : "Can I do this?"
+    }
+  }, {
+    "type" : "actions",
+    "elements" : [ {
+      "action_id" : "approve_for_123",
+      "style" : "primary",
+      "text" : {
+        "type" : "plain_text",
+        "emoji" : true,
+        "text" : "Approve"
+      },
+      "type" : "button",
+      "value" : "click_me_123"
+    }, {
+      "action_id" : "deny_for_123",
+      "style" : "danger",
+      "text" : {
+        "type" : "plain_text",
+        "emoji" : true,
+        "text" : "Deny"
+      },
+      "type" : "button",
+      "value" : "click_me_123"
+    } ]
+  } ]
+}
