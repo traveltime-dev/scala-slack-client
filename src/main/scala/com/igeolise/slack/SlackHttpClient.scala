@@ -1,13 +1,12 @@
 package com.igeolise.slack
 
-import java.nio.charset.Charset
-
 import com.igeolise.slack.HooksSlackClient.{Error, HookMessage}
 import com.igeolise.slack.dto.InteractiveMessage
 import com.igeolise.slack.json.InteractiveMessageWrites._
 import com.igeolise.slack.util.PayloadMapper
 import dispatch.{Http, url => Url, _}
 import play.api.libs.json.{JsValue, Json}
+import java.nio.charset.StandardCharsets.UTF_8
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -34,7 +33,7 @@ object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
         .POST
         .setBody(body.toString)
         .setHeaders(headers)
-        .setContentType(jsonContentType, Charset.defaultCharset())
+        .setContentType(jsonContentType, UTF_8)
 
     Http
       .default(request)
