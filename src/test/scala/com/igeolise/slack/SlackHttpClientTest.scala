@@ -1,22 +1,25 @@
 package com.igeolise.slack
 
-import com.igeolise.slack.HooksSlackClient.{Attachment, HookMessage}
+import java.io.File
+
 import com.igeolise.slack.HooksSlackClient.Color.{Gray, Green}
 import com.igeolise.slack.HooksSlackClient.Notify.{Channel, UserGroup, UserId}
-import com.igeolise.slack.util.PayloadMapper
+import com.igeolise.slack.HooksSlackClient.{Attachment, HookMessage}
+import com.igeolise.slack.dto.SlackFile
+import com.igeolise.slack.util.{PayloadMapper, RequestHelpers}
+import org.asynchttpclient.request.body.multipart.StringPart
 import org.scalacheck.Gen
-import org.scalatest.Matchers
-import org.scalatest.FunSpec
+import org.scalatest.{FunSpec, Matchers}
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 
-class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPropertyChecks {
+class SlackHttpClientTest extends FunSpec with Matchers with ScalaCheckDrivenPropertyChecks {
 
   describe("HttpSlackClient") {
     it("treat 2xx response as success") {
       val successCodeGen = Gen.choose(200, 299)
 
       forAll(successCodeGen) { code =>
-        SlackHttpClient.isResponseSuccess(code) shouldEqual true
+        RequestHelpers.isResponseSuccess(code) shouldEqual true
       }
     }
 
@@ -28,7 +31,7 @@ class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPro
       } yield code
 
       forAll(failureCodeGen) { code =>
-        SlackHttpClient.isResponseSuccess(code) shouldEqual false
+        RequestHelpers.isResponseSuccess(code) shouldEqual false
       }
     }
   }
@@ -48,6 +51,28 @@ class HttpSlackClientTest extends FunSpec with Matchers with ScalaCheckDrivenPro
                      """{"text":"some attachment text 2","color":"#808080","mrkdwn_in":["text"]}""" +
                      """],"link_names":1}"""
       mapped shouldEqual expected
+    }
+  }
+
+  describe("getOptionalSlackFileParts()") {
+    it("should create existing parts collection out of SlackFile") {
+
+      val slackFile = SlackFile(
+        file = new File("temp"),
+        maybeFileName = None,
+        maybeFileType = Some("csv"),
+        maybeInitialComment = None,
+        maybeThreadTs = None,
+        maybeTitle = Some("best-title")
+      )
+
+      val expectedFileTypePart = new StringPart("filetype", "csv")
+      val expectedTitlePart = new StringPart("title", "best-title")
+
+      val result = SlackHttpClient.getOptionalSlackFileParts(slackFile).map(_.toString)
+      val expected = Seq(expectedFileTypePart, expectedTitlePart).map(_.toString)
+
+      result should contain theSameElementsAs expected
     }
   }
 }
