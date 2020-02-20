@@ -1,14 +1,17 @@
 package com.igeolise.slack
 
-import com.igeolise.slack.HooksSlackClient.{Error, HookMessage}
-import com.igeolise.slack.dto.InteractiveMessage
-import com.igeolise.slack.json.InteractiveMessageWrites._
-import com.igeolise.slack.util.PayloadMapper
-import dispatch.{Http, url => Url, _}
-import play.api.libs.json.{JsValue, Json}
 import java.nio.charset.StandardCharsets.UTF_8
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import com.igeolise.slack.HooksSlackClient.{Error, HookMessage}
+import com.igeolise.slack.dto.InteractiveMessage.Channel
+import com.igeolise.slack.dto.{InteractiveMessage, SlackFile}
+import com.igeolise.slack.json.InteractiveMessageWrites._
+import com.igeolise.slack.util.PayloadMapper
+import com.igeolise.slack.util.RequestHelpers._
+import dispatch.{url => Url}
+import org.asynchttpclient.request.body.multipart.{FilePart, StringPart}
+import play.api.libs.json.{JsValue, Json}
+
 import scala.concurrent.Future
 
 object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
@@ -27,23 +30,37 @@ object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
       Map("Authorization" -> Seq(authToken))
     )
 
-  private def sendPost(url: String, body: JsValue, headers: Map[String, Seq[String]]): Future[Either[Error, Unit]] = {
-    val request =
-      Url(url)
-        .POST
-        .setBody(body.toString)
-        .setHeaders(headers)
-        .setContentType(jsonContentType, UTF_8)
+  private def sendPost(url: String, body: JsValue, headers: Map[String, Seq[String]]): Future[Either[Error, Unit]] =
+    Url(url)
+      .POST
+      .setBody(body.toString)
+      .setHeaders(headers)
+      .setContentType(jsonContentType, UTF_8)
+      .send
 
-    Http
-      .default(request)
-      .either
-      .map {
-        case Left(t) => Left(Error.Exception(t))
-        case Right(r) => if (isResponseSuccess(r.getStatusCode)) Right(())
-        else Left(Error.UnexpectedStatusCode(r.getStatusCode, r.getResponseBody))
-      }
+  def uploadFile(channels: Seq[Channel], authToken: String, slackFile: SlackFile): Future[Either[Error, Unit]] = {
+
+    val requiredParts = Seq(
+      new FilePart("file", slackFile.file),
+      new StringPart("channels", channels.map(_.id).mkString(","))
+    )
+
+    val allParts = requiredParts ++ getOptionalSlackFileParts(slackFile)
+
+    Url(uploadFileUrl)
+      .POST
+      .addBodyParts(allParts)
+      .setHeaders(Map("Authorization" -> Seq(authToken)))
+      .setContentType(multipartFormDataContentType, UTF_8)
+      .send
   }
 
-  def isResponseSuccess(code: Int): Boolean = code >= 200 && code <= 299
+  def getOptionalSlackFileParts(slackFile: SlackFile): Seq[StringPart] =
+    Seq(
+      toPart("filename", slackFile.maybeFileName),
+      toPart("filetype", slackFile.maybeFileType),
+      toPart("thread_ts", slackFile.maybeThreadTs),
+      toPart("title", slackFile.maybeTitle),
+      toPart("initial_comment", slackFile.maybeInitialComment)
+    ).collect{ case Some(part) => part }
 }
