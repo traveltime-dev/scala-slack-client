@@ -16,12 +16,19 @@ object HooksSlackClient {
 
   case class HookMessage(notifications: Seq[Notify], msg: String, attachments: Seq[Attachment])
 
-  sealed abstract class Color(val code: String)
+  sealed trait Color { val code: String }
   object Color {
-    case object Red    extends Color("#FF0000")
-    case object Green  extends Color("#008000")
-    case object Gray   extends Color("#808080")
-    case object Yellow extends Color("#FFFF00")
+    sealed abstract class PredefinedColor(val code: String) extends Color
+    case object Red     extends PredefinedColor("#FF0000")
+    case object Green   extends PredefinedColor("#008000")
+    case object Gray    extends PredefinedColor("#808080")
+    case object Yellow  extends PredefinedColor("#FFFF00")
+    case object White   extends PredefinedColor("#FFFFFF")
+    case object Black   extends PredefinedColor("#000000")
+    case object Cyan    extends PredefinedColor("#00FFFF")
+    case object Magenta extends PredefinedColor("#FF00FF")
+
+    case class CustomColor(code: String) extends Color
   }
 
   case class Attachment(text: String, color: Color)
