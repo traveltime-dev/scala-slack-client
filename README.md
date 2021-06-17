@@ -1,6 +1,3 @@
-[![Build Status](https://travis-ci.org/igeolise/scala-slack-client.svg?branch=master)](https://travis-ci.org/igeolise/scala-slack-client)
-[![Bintray Download](https://api.bintray.com/packages/igeolise/maven/scala-slack-client/images/download.svg) ](https://bintray.com/igeolise/maven/scala-slack-client/_latestVersion)
-
 About
 --------------------------------------------------
 Minimalistic [Slack](https://slack.com/) client.
@@ -51,16 +48,8 @@ println(Await.result(response, 1.minute))
 
 SBT dependency
 --------------------------------------------------
-Package is available at [Bintray](https://bintray.com/igeolise/maven/scala-slack-client).
 Check for the latest version and add to your `build.sbt`:
 
 ```
-resolvers += Resolver.bintrayRepo("igeolise", "maven")
-
 libraryDependencies += "com.igeolise" %% "scala-slack-client" % "<latest_version>"
 ```
-
-Development
---------------------------------------------------
-
-Check [Wiki](https://github.com/igeolise/scala-slack-client/wiki) for development notes.
