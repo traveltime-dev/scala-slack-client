@@ -1,7 +1,7 @@
-package com.igeolise.slack.json
-import com.igeolise.slack.dto.InteractiveMessage._
-import com.igeolise.slack.dto.TextObject.{Mrkdwn, PlainText, TextType}
-import com.igeolise.slack.dto.{Button, ConfirmDialog, InteractiveMessage, TextObject}
+package com.traveltime.slack.json
+import com.traveltime.slack.dto.InteractiveMessage._
+import com.traveltime.slack.dto.TextObject.{Mrkdwn, PlainText, TextType}
+import com.traveltime.slack.dto.{Button, ConfirmDialog, InteractiveMessage, TextObject}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 

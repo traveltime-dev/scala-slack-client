@@ -1,4 +1,4 @@
-package com.igeolise.slack.dto
+package com.traveltime.slack.dto
 
 import java.io.File
 

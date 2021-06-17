@@ -1,6 +1,6 @@
-package com.igeolise.slack.dto
+package com.traveltime.slack.dto
 
-import com.igeolise.slack.dto.TextObject.TextType
+import com.traveltime.slack.dto.TextObject.TextType
 
 /**
  * [[https://api.slack.com/reference/block-kit/composition-objects#text]]

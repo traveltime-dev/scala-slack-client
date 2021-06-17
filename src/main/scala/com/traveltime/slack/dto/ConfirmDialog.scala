@@ -1,4 +1,4 @@
-package com.igeolise.slack.dto
+package com.traveltime.slack.dto
 
 /**
  * [[https://api.slack.com/reference/block-kit/composition-objects#confirm]]

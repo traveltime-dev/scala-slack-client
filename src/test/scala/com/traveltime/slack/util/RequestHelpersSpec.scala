@@ -1,8 +1,8 @@
-package com.igeolise.slack.util
+package com.traveltime.slack.util
 
 import java.io.File
 
-import com.igeolise.slack.util.RequestHelpers._
+import com.traveltime.slack.util.RequestHelpers._
 import dispatch.url
 import org.asynchttpclient.request.body.multipart.{ByteArrayPart, FilePart, StringPart}
 import org.scalatest.{FunSpec, Matchers}

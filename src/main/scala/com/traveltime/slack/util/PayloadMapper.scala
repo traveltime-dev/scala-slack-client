@@ -1,6 +1,6 @@
-package com.igeolise.slack.util
+package com.traveltime.slack.util
 
-import com.igeolise.slack.HooksSlackClient.HookMessage
+import com.traveltime.slack.HooksSlackClient.HookMessage
 import play.api.libs.json.{JsObject, Json}
 
 object PayloadMapper {

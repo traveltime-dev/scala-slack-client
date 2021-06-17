@@ -1,4 +1,15 @@
-organization := "com.igeolise"
+inThisBuild(List(
+  organization := "com.traveltime",
+  homepage := Some(url("https://github.com/traveltime-dev/scala-slack-client")),
+  licenses := List("MIT License" -> url("https://github.com/traveltime-dev/scala-slack-client/blob/master/LICENSE.txt")),
+  developers := List(
+    Developer("donatas", "Donatas Laurinavičius", "donatas@traveltime.com", url("https://traveltime.com")),
+    Developer("jonas", "Jonas Krutulis", "jonas.krutulis@traveltime.com", url("https://traveltime.com"))
+  )
+))
+
+sonatypeCredentialHost := "s01.oss.sonatype.org"
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 name := "scala-slack-client"
 
@@ -21,7 +32,5 @@ libraryDependencies ++= Seq(
   "org.scalatest"      %% "scalatest"     % "3.0.8"    % Test,
   "org.scalacheck"     %% "scalacheck"    % "1.14.0"   % Test
 )
-
-bintrayOrganization := Some("igeolise")
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))

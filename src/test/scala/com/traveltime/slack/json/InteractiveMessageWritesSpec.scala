@@ -1,12 +1,12 @@
-package com.igeolise.slack.json
+package com.traveltime.slack.json
 
-import com.igeolise.slack.dto.Button.{ActionId, Danger, Primary}
-import com.igeolise.slack.dto.{Button, InteractiveMessage, TextObject}
-import com.igeolise.slack.dto.InteractiveMessage.{Actions, Channel, Divider, Section}
-import com.igeolise.slack.dto.TextObject.{Mrkdwn, PlainText}
+import com.traveltime.slack.dto.Button.{ActionId, Danger, Primary}
+import com.traveltime.slack.dto.{Button, InteractiveMessage, TextObject}
+import com.traveltime.slack.dto.InteractiveMessage.{Actions, Channel, Divider, Section}
+import com.traveltime.slack.dto.TextObject.{Mrkdwn, PlainText}
 import org.scalatest.{FunSpec, Matchers}
 import play.api.libs.json.Json
-import com.igeolise.slack.json.InteractiveMessageWrites._
+import com.traveltime.slack.json.InteractiveMessageWrites._
 
 import scala.io.Source
 
