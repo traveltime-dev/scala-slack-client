@@ -1,6 +1,6 @@
-package com.igeolise.slack.util
+package com.traveltime.slack.util
 
-import com.igeolise.slack.HooksSlackClient.Error
+import com.traveltime.slack.HooksSlackClient.Error
 import dispatch.{Http, Req, _}
 import org.asynchttpclient.request.body.multipart.{Part, StringPart}
 

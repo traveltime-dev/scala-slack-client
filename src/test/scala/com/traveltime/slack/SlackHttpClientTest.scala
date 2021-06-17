@@ -1,12 +1,12 @@
-package com.igeolise.slack
+package com.traveltime.slack
 
 import java.io.File
 
-import com.igeolise.slack.HooksSlackClient.Color.{Gray, Green}
-import com.igeolise.slack.HooksSlackClient.Notify.{Channel, UserGroup, UserId}
-import com.igeolise.slack.HooksSlackClient.{Attachment, HookMessage}
-import com.igeolise.slack.dto.SlackFile
-import com.igeolise.slack.util.{PayloadMapper, RequestHelpers}
+import com.traveltime.slack.HooksSlackClient.Color.{Gray, Green}
+import com.traveltime.slack.HooksSlackClient.Notify.{Channel, UserGroup, UserId}
+import com.traveltime.slack.HooksSlackClient.{Attachment, HookMessage}
+import com.traveltime.slack.dto.SlackFile
+import com.traveltime.slack.util.{PayloadMapper, RequestHelpers}
 import org.asynchttpclient.request.body.multipart.StringPart
 import org.scalacheck.Gen
 import org.scalatest.{FunSpec, Matchers}

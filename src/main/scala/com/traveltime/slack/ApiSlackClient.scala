@@ -1,8 +1,8 @@
-package com.igeolise.slack
+package com.traveltime.slack
 
-import com.igeolise.slack.HooksSlackClient.Error
-import com.igeolise.slack.dto.{InteractiveMessage, SlackFile}
-import com.igeolise.slack.dto.InteractiveMessage.Channel
+import com.traveltime.slack.HooksSlackClient.Error
+import com.traveltime.slack.dto.{InteractiveMessage, SlackFile}
+import com.traveltime.slack.dto.InteractiveMessage.Channel
 
 import scala.concurrent.Future
 

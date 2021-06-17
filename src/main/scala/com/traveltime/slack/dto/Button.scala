@@ -1,7 +1,7 @@
-package com.igeolise.slack.dto
+package com.traveltime.slack.dto
 
-import com.igeolise.slack.dto.Button.{ActionId, ButtonStyle}
-import com.igeolise.slack.dto.InteractiveMessage.Element
+import com.traveltime.slack.dto.Button.{ActionId, ButtonStyle}
+import com.traveltime.slack.dto.InteractiveMessage.Element
 
 /**
  * [[https://api.slack.com/reference/block-kit/block-elements#button]]

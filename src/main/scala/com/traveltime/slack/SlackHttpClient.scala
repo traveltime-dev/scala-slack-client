@@ -1,13 +1,13 @@
-package com.igeolise.slack
+package com.traveltime.slack
 
 import java.nio.charset.StandardCharsets.UTF_8
 
-import com.igeolise.slack.HooksSlackClient.{Error, HookMessage}
-import com.igeolise.slack.dto.InteractiveMessage.Channel
-import com.igeolise.slack.dto.{InteractiveMessage, SlackFile}
-import com.igeolise.slack.json.InteractiveMessageWrites._
-import com.igeolise.slack.util.PayloadMapper
-import com.igeolise.slack.util.RequestHelpers._
+import com.traveltime.slack.HooksSlackClient.{Error, HookMessage}
+import com.traveltime.slack.dto.InteractiveMessage.Channel
+import com.traveltime.slack.dto.{InteractiveMessage, SlackFile}
+import com.traveltime.slack.json.InteractiveMessageWrites._
+import com.traveltime.slack.util.PayloadMapper
+import com.traveltime.slack.util.RequestHelpers._
 import dispatch.{url => Url}
 import org.asynchttpclient.request.body.multipart.{FilePart, StringPart}
 import play.api.libs.json.{JsValue, Json}

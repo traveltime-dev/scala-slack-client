@@ -1,6 +1,6 @@
-package com.igeolise.slack
+package com.traveltime.slack
 
-import com.igeolise.slack.HooksSlackClient.HookMessage
+import com.traveltime.slack.HooksSlackClient.HookMessage
 import org.apache.commons.lang3.exception.ExceptionUtils
 
 import scala.concurrent.Future

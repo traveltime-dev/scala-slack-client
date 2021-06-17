@@ -1,6 +1,6 @@
-package com.igeolise.slack.dto
+package com.traveltime.slack.dto
 
-import com.igeolise.slack.dto.InteractiveMessage.{Block, Channel}
+import com.traveltime.slack.dto.InteractiveMessage.{Block, Channel}
 
 case class InteractiveMessage(channel: Channel, blocks: Vector[Block])
 
