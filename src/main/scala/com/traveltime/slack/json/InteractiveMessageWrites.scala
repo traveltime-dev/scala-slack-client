@@ -1,7 +1,7 @@
 package com.traveltime.slack.json
 import com.traveltime.slack.dto.InteractiveMessage._
 import com.traveltime.slack.dto.TextObject.{Mrkdwn, PlainText, TextType}
-import com.traveltime.slack.dto.{Button, ConfirmDialog, InteractiveMessage, TextObject}
+import com.traveltime.slack.dto.{ConfirmDialog, InteractiveMessage, TextObject}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -37,25 +37,9 @@ object InteractiveMessageWrites {
     (__ \ "deny").write[TextObject]
   )(unlift(ConfirmDialog.unapply))
 
-  val buttonWrites: Writes[Button] = (button: Button) => JsObject(
-    Map(
-      "type" -> Some(JsString("button")),
-      "text" -> Some(textObjectWrites.writes(button.textObject)),
-      "action_id" -> Some(JsString(button.actionId.id)),
-      "url" -> button.url.map(JsString),
-      "value" -> button.value.map(JsString),
-      "style" -> button.style.map(style => JsString(style.literal)),
-      "confirm" -> button.confirm.map(confirmDialogWrites.writes)
-    ).collect{ case (key, Some(value)) => (key, value) }
-  )
-
-  val elementsWrites: Writes[Element] = Writes[Element] {
-    case e: Button => buttonWrites.writes(e)
-  }
-
   val actionsWrites: Writes[Actions] = (actions: Actions) => JsObject(Map(
     "type" -> JsString(actions.blockType),
-    "elements" -> JsArray(actions.elements.map(elementsWrites.writes))
+    "elements" -> JsArray(actions.elements.map(_.asJson))
   ))
 
   val dividerWrites: Writes[Divider.type] = (_: InteractiveMessage.Divider.type) =>

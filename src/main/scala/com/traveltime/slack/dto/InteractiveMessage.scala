@@ -1,6 +1,7 @@
 package com.traveltime.slack.dto
 
 import com.traveltime.slack.dto.InteractiveMessage.{Block, Channel}
+import play.api.libs.json.JsValue
 
 case class InteractiveMessage(channel: Channel, blocks: Vector[Block])
 
@@ -10,7 +11,9 @@ object InteractiveMessage {
    */
   case class Channel(id: String)
 
-  trait Element
+  trait Element {
+    def asJson: JsValue
+  }
 
   sealed abstract class Block(val blockType: String)
   case object Divider extends Block("divider")
