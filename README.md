@@ -1,3 +1,6 @@
+[![Artifact publish](https://github.com/traveltime-dev/scala-slack-client/actions/workflows/publish-artifact.yaml/badge.svg?branch=master)](https://github.com/traveltime-dev/scala-slack-client/actions/workflows/publish-artifact.yaml)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.traveltime/scala-slack-client_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.traveltime/scala-slack-client_2.12)
+
 About
 --------------------------------------------------
 Minimalistic [Slack](https://slack.com/) client.
