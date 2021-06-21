@@ -13,6 +13,8 @@ sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 name := "scala-slack-client"
 
+crossScalaVersions := Seq("2.13.6", "2.12.14")
+
 scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
