@@ -1,4 +1,5 @@
 package com.traveltime.slack.json
+
 import com.traveltime.slack.dto.InteractiveMessage._
 import com.traveltime.slack.dto.TextObject.{Mrkdwn, PlainText, TextType}
 import com.traveltime.slack.dto.{Button, ConfirmDialog, InteractiveMessage, TextObject}
@@ -37,7 +38,7 @@ object InteractiveMessageWrites {
     (__ \ "deny").write[TextObject]
   )(unlift(ConfirmDialog.unapply))
 
-  val buttonWrites: Writes[Button] = (button: Button) => JsObject(
+  implicit val buttonWrites: Writes[Button] = (button: Button) => JsObject(
     Map(
       "type" -> Some(JsString("button")),
       "text" -> Some(textObjectWrites.writes(button.textObject)),
@@ -46,29 +47,31 @@ object InteractiveMessageWrites {
       "value" -> button.value.map(JsString),
       "style" -> button.style.map(style => JsString(style.literal)),
       "confirm" -> button.confirm.map(confirmDialogWrites.writes)
-    ).collect{ case (key, Some(value)) => (key, value) }
+    ).collect { case (key, Some(value)) => (key, value) }
   )
 
-  val elementsWrites: Writes[Element] = Writes[Element] {
-    case e: Button => buttonWrites.writes(e)
+  def actionsWrites[A: Writes]: Writes[Actions[A]] = (actions: Actions[A]) => {
+    val w = implicitly[Writes[A]]
+    JsObject(Map(
+      "type" -> JsString(actions.blockType),
+      "elements" -> JsArray(actions.elements.map(w.writes))
+    ))
   }
 
-  val actionsWrites: Writes[Actions] = (actions: Actions) => JsObject(Map(
-    "type" -> JsString(actions.blockType),
-    "elements" -> JsArray(actions.elements.map(elementsWrites.writes))
-  ))
-
-  val dividerWrites: Writes[Divider.type] = (_: InteractiveMessage.Divider.type) =>
+  val dividerWrites: Writes[Divider.type] = (_: Divider.type) =>
     JsObject(Map("type" -> JsString("divider")))
 
-  implicit val blockWrites: Writes[Block] = Writes[Block] {
+  implicit def blockWrites[A: Writes]: Writes[Block[A]] = Writes[Block[A]] {
     case b: Divider.type => dividerWrites.writes(b)
     case b: Section => sectionWrites.writes(b)
-    case b: Actions => actionsWrites.writes(b)
+    case b: Actions[A] =>
+      val w = implicitly[Writes[A]]
+      actionsWrites(w).writes(b)
   }
 
-  implicit val interactiveMessageWrites: Writes[InteractiveMessage] = (
-    (__ \ "channel").write[String].contramap[Channel](_.id) and
-    (__ \ "blocks").write[Vector[Block]]
-  )(unlift(InteractiveMessage.unapply))
+  implicit def interactiveMessageWrites[A: Writes]: Writes[InteractiveMessage[A]] =
+    (
+      (__ \ "channel").write[String].contramap[Channel](_.id) and
+        (__ \ "blocks").write[Vector[Block[A]]]
+      ) (unlift(InteractiveMessage.unapply[A]))
 }

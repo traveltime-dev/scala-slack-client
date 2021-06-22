@@ -2,7 +2,7 @@ package com.traveltime.slack.dto
 
 import com.traveltime.slack.dto.InteractiveMessage.{Block, Channel}
 
-case class InteractiveMessage(channel: Channel, blocks: Vector[Block])
+case class InteractiveMessage[A](channel: Channel, blocks: Vector[Block[A]])
 
 object InteractiveMessage {
   /**
@@ -10,10 +10,8 @@ object InteractiveMessage {
    */
   case class Channel(id: String)
 
-  trait Element
-
-  sealed abstract class Block(val blockType: String)
-  case object Divider extends Block("divider")
-  case class Section(textObject: TextObject) extends Block("section")
-  case class Actions(elements: Vector[Element]) extends Block("actions")
+  sealed abstract class Block[+A](val blockType: String)
+  case object Divider extends Block[Nothing]("divider")
+  case class Section(textObject: TextObject) extends Block[Nothing]("section")
+  case class Actions[A](elements: Vector[A]) extends Block[A]("actions")
 }

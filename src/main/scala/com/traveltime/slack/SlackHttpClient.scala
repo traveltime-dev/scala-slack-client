@@ -1,7 +1,6 @@
 package com.traveltime.slack
 
 import java.nio.charset.StandardCharsets.UTF_8
-
 import com.traveltime.slack.HooksSlackClient.{Error, HookMessage}
 import com.traveltime.slack.dto.InteractiveMessage.Channel
 import com.traveltime.slack.dto.{InteractiveMessage, SlackFile}
@@ -10,7 +9,7 @@ import com.traveltime.slack.util.PayloadMapper
 import com.traveltime.slack.util.RequestHelpers._
 import dispatch.{url => Url}
 import org.asynchttpclient.request.body.multipart.{FilePart, StringPart}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsValue, Json, Writes}
 
 import scala.concurrent.Future
 
@@ -23,7 +22,7 @@ object SlackHttpClient extends HooksSlackClient with ApiSlackClient {
     sendPost(url, body, Map.empty)
   }
 
-  def sendInteractiveMessage(interactiveMessage: InteractiveMessage, authToken: String): Future[Either[Error, Unit]] =
+  def sendInteractiveMessage[A : Writes](interactiveMessage: InteractiveMessage[A], authToken: String): Future[Either[Error, Unit]] =
     sendPost(
       postMessageUrl,
       Json.toJson(interactiveMessage),
