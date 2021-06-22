@@ -26,7 +26,7 @@ object InteractiveMessageWrites {
   implicit val textObjectWrites: Writes[TextObject] = (textObject: TextObject) =>
     textTypeWrites(textObject.textType) ++ JsObject(Map("text" -> JsString(textObject.text)))
 
-  def sectionWrites[A]: Writes[Section[A]] = (section: Section[A]) => JsObject(Map(
+  val sectionWrites: Writes[Section] = (section: Section) => JsObject(Map(
     "type" -> JsString(section.blockType),
     "text" -> textObjectWrites.writes(section.textObject)
   ))
@@ -58,12 +58,12 @@ object InteractiveMessageWrites {
     ))
   }
 
-  def dividerWrites[A]: Writes[Divider[A]] = _ =>
+  val dividerWrites: Writes[Divider.type] = (_: Divider.type) =>
     JsObject(Map("type" -> JsString("divider")))
 
   implicit def blockWrites[A: Writes]: Writes[Block[A]] = Writes[Block[A]] {
-    case b: Divider[A] => dividerWrites.writes(b)
-    case b: Section[A] => sectionWrites.writes(b)
+    case b: Divider.type => dividerWrites.writes(b)
+    case b: Section => sectionWrites.writes(b)
     case b: Actions[A] =>
       val w = implicitly[Writes[A]]
       actionsWrites(w).writes(b)

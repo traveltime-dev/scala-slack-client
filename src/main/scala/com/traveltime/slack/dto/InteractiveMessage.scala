@@ -10,8 +10,8 @@ object InteractiveMessage {
    */
   case class Channel(id: String)
 
-  sealed abstract class Block[A](val blockType: String)
-  case class Divider[A]() extends Block[A]("divider")
-  case class Section[A](textObject: TextObject) extends Block[A]("section")
+  sealed abstract class Block[+A](val blockType: String)
+  case object Divider extends Block[Nothing]("divider")
+  case class Section(textObject: TextObject) extends Block[Nothing]("section")
   case class Actions[A](elements: Vector[A]) extends Block[A]("actions")
 }

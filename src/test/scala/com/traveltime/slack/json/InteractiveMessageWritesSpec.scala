@@ -2,7 +2,7 @@ package com.traveltime.slack.json
 
 import com.traveltime.slack.dto.Button.{ActionId, Danger, Primary}
 import com.traveltime.slack.dto.{Button, InteractiveMessage, TextObject}
-import com.traveltime.slack.dto.InteractiveMessage.{Actions, Block, Channel, Divider, Section}
+import com.traveltime.slack.dto.InteractiveMessage.{Actions, Channel, Divider, Section}
 import com.traveltime.slack.dto.TextObject.{Mrkdwn, PlainText}
 import org.scalatest.{FunSpec, Matchers}
 import play.api.libs.json.Json
@@ -16,9 +16,9 @@ class InteractiveMessageWritesSpec extends FunSpec with Matchers {
 
     it("should serialize interactive slack message") {
 
-      val section = Section[Button](TextObject(Mrkdwn(), "Hello, I would like to do some things"))
-      val divider = Divider[Button]()
-      val section2 = Section[Button](TextObject(PlainText(), "Can I do this?"))
+      val section = Section(TextObject(Mrkdwn(), "Hello, I would like to do some things"))
+      val divider = Divider
+      val section2 = Section(TextObject(PlainText(), "Can I do this?"))
       val approveButton = Button(
         textObject = TextObject(PlainText(true), "Approve"),
         actionId = ActionId("approve_for_123"),
@@ -35,7 +35,7 @@ class InteractiveMessageWritesSpec extends FunSpec with Matchers {
       )
       val actions = Actions(Vector(approveButton, denyButton))
 
-      val blocks: Vector[Block[Button]] = Vector(section, divider, section2, actions)
+      val blocks = Vector(section, divider, section2, actions)
       val interactiveSlackMessage = InteractiveMessage(Channel("test_channel_Id"), blocks)
 
       val source = Source.fromURL(getClass.getClassLoader.getResource("json/interactiveMessage.json"))
